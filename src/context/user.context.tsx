@@ -23,7 +23,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     tokenService.removeUser();
-    window.location.href = "https://ticket-web-tbyc.onrender.com/login";
+    window.location.href = "https://ticket-web-tbyc.onrender.com/";
   }
 
   return (
