@@ -46,12 +46,8 @@ const Dashboard: React.FC = () => {
     );
   }, []);
 
-  const handleFilter = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    //const { value } = e.target.value;
-    setSearchTerm(e.target.value);
-    
-    debugger;
-    const filteredData = content.filter(async item =>
+  useEffect(() => {
+    const newFilteredData = content.filter(item =>
       item.id === Number(searchTerm) ||
       item.reported_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       users?.find(user => user.id === parseInt(item.assigned_to))?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -62,9 +58,8 @@ const Dashboard: React.FC = () => {
       item.task_status.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.task_priority.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    setFilteredContent(filteredData);
-  };
+    setFilteredContent(newFilteredData);
+  }, [searchTerm, content]);
 
   if (loading) {
     return <div id="loading-data"><p className="spinner-grow custom-spinner-size text-danger"></p><h3>Loading tickets...</h3></div>;
@@ -84,12 +79,13 @@ const Dashboard: React.FC = () => {
           type="text"
           placeholder="Search by Staff Name, Accommodation Name, Accommodation Type, Request Type, Status, or Priority..."
           value={searchTerm}
-          onChange={(e) => handleFilter(e)}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="p-2 border border-gray-300 rounded search-terms"
         />
       </div>
       <div id="table-container">
-        {filteredContent !== null ? (filteredContent as ITicket[]).length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : content !== null ? (content as ITicket[]).length > 0 ? <TicketTable data={content!} users={users!} rowsPerPage={7} /> : <p>No data</p> : <p>No data</p> : <p>No data</p>}
+        <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} />
+        {/* {filteredContent !== null ? (filteredContent as ITicket[]).length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : content !== null ? (content as ITicket[]).length > 0 ? <TicketTable data={content!} users={users!} rowsPerPage={7} /> : <p>No data</p> : <p>No data</p> : <p>No data</p>} */}
       </div>
     </div>
   );
