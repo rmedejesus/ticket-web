@@ -50,7 +50,6 @@ const Dashboard: React.FC = () => {
     //const { value } = e.target.value;
     setSearchTerm(e.target.value);
     
-    debugger;
     const filteredData = content.filter(async item =>
       item.id === Number(searchTerm) ||
       item.reported_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
