@@ -40,7 +40,7 @@ const LoginForm: React.FC = () => {
     <div className="main-container">
       <div className="d-flex align-items-center login-div">
         <div>
-          <img className="sj-gif" src="../../public/sj.gif" alt="sj-logo" />
+          <img className="sj-gif" src="/sj.gif" alt="sj-logo" />
         </div>
         <Container className="mt-5">
           <h2 className="mb-4 text-center">Login</h2>
