@@ -51,7 +51,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
       () => {
         setLoading(false);
         alert("Ticket status updated successfully.");
-        window.location.reload();
+        navigate('/dashboard');
       },
       (error) => {
         setLoading(false);
