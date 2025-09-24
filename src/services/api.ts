@@ -2,7 +2,7 @@ import axios from "axios";
 import TokenService from "./token.service";
 
 const instance = axios.create({
-  baseURL: "http://192.168.1.57:8080/api/v1",
+  baseURL: "https://192.168.1.57:8080/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
@@ -40,7 +40,7 @@ instance.interceptors.response.use(
 
         try {
           const token = TokenService.getLocalAccessToken();
-          const rs = await axios.post("http://192.168.1.57:8080/api/v1/refresh-token", { refresh_token: token.refresh_token });
+          const rs = await axios.post("https://192.168.1.57:8080/api/v1/refresh-token", { refresh_token: token.refresh_token });
 
           const accessToken = rs.data;
           TokenService.updateLocalAccessToken(accessToken);
