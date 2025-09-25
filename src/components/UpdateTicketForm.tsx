@@ -86,7 +86,7 @@ const UpdateTicketForm: React.FC = () => {
       () => {
         setLoading(false);
         alert("Ticket updated successfully.");
-        navigate('/dashboard');
+        navigate('/');
       },
       (error) => {
         const resMessage = error.response.data.error;

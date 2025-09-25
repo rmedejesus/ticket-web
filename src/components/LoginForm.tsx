@@ -26,7 +26,7 @@ const LoginForm: React.FC = () => {
             navigate('/login');
           }
         );
-        navigate('/dashboard');
+        navigate('/');
       },
       (error) => {
         const resMessage = error;
