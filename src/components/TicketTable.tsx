@@ -19,8 +19,12 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
   const { slice, range } = useTable(data, page, rowsPerPage);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [itemIdToDelete, setItemIdToDelete] = useState('');
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setItemIdToDelete('');
+  }
   const handleShow = () => setShow(true);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -62,7 +66,14 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
   };
 
   const handleDeleteTicket = async (id: string) => {
-    await TicketService.deleteTicket(id).then(
+    debugger;
+    setItemIdToDelete(id);
+    handleShow();
+  };
+
+  const confirmDeleteTicket = async () => {
+    debugger;
+    await TicketService.deleteTicket(itemIdToDelete).then(
       () => {
         alert("Ticket deleted successfully.");
         handleClose();
@@ -136,7 +147,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
                   </div> : ""
                 }
 
-                <Button className="text-nowrap btn-sm btn-danger delete-btn" onClick={() => handleShow()}>
+                <Button className="text-nowrap btn-sm btn-danger delete-btn" onClick={() => handleDeleteTicket(el.id.toString())}>
                   <i className="fa fa-trash"></i>
                 </Button>
                 <Modal show={show} onHide={handleClose}>
@@ -148,7 +159,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
-                    <Button variant="primary" onClick={() => handleDeleteTicket(el.id.toString())}>
+                    <Button variant="primary" onClick={confirmDeleteTicket}>
                       Delete
                     </Button>
                   </Modal.Footer>

@@ -47,11 +47,8 @@ const Dashboard: React.FC = () => {
   }, []);
 
 
-  const handleFilter = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    //const { value } = e.target.value;
-    setSearchTerm(e.target.value);
-    
-    const filteredData = content.filter(async item =>
+  useEffect(() => {
+    const newFilteredData = content.filter(item =>
       item.id === Number(searchTerm) ||
       item.reported_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       users?.find(user => user.id === parseInt(item.assigned_to))?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -63,7 +60,7 @@ const Dashboard: React.FC = () => {
       item.task_priority.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredContent(newFilteredData);
-  });
+  }, [searchTerm, content]);
 
   if (loading) {
     return <div id="loading-data"><p className="spinner-grow custom-spinner-size text-danger"></p><h3>Loading tickets...</h3></div>;
