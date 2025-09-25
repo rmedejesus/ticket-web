@@ -23,7 +23,11 @@ const useTable = (tickets: ITicket[], page: number, rowsPerPage: number) => {
     setTableRange([...range]);
 
     const slice = sliceData(tickets, page, rowsPerPage);
-    setSlice([...slice]);
+
+    if (Array.isArray(slice)) {
+      setSlice([...slice]);
+    }
+    
   }, [tickets, setTableRange, page, setSlice]);
 
   return { slice, range: tableRange };
