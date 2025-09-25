@@ -23,7 +23,7 @@ const TicketNavbar: React.FC = () => {
   return (
     <Navbar expand="lg" className="sj-navbar navbar-dark bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/"><img src="../../public/sj-horizontal.png"></img></Navbar.Brand>
+        <Navbar.Brand href="/"><img src="/sj-horizontal.png"></img></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">

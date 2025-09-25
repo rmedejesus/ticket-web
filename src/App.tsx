@@ -38,6 +38,12 @@ const App: React.FC = () => {
         <Routes>
           <Route path="*" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <LoginForm />} />
           <Route
+            path="/login"
+            element={
+              <LoginForm />
+            }
+          />
+          <Route
             path="/dashboard"
             element={
               <PrivateRoute>
