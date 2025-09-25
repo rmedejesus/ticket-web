@@ -11,7 +11,7 @@ const calculateRange = (tickets: ITicket[], rowsPerPage: number) => {
 };
 
 const sliceData = (tickets: ITicket[], page: number, rowsPerPage: number) => {
-  return tickets.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+  return tickets?.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 };
 
 const useTable = (tickets: ITicket[], page: number, rowsPerPage: number) => {

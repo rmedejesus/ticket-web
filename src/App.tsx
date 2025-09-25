@@ -36,7 +36,7 @@ const App: React.FC = () => {
       <Router>
         <TicketNavbar />
         <Routes>
-          <Route path="*" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <LoginForm />} />
+          <Route path="/" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
           <Route
             path="/login"
             element={
@@ -44,7 +44,7 @@ const App: React.FC = () => {
             }
           />
           <Route
-            path="/dashboard"
+            path="/"
             element={
               <PrivateRoute>
                 <Dashboard />
