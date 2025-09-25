@@ -46,20 +46,22 @@ const Dashboard: React.FC = () => {
     );
   }, []);
 
-
   useEffect(() => {
-    const newFilteredData = content.filter(item =>
-      item.id === Number(searchTerm) ||
-      item.reported_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      users?.find(user => user.id === parseInt(item.assigned_to))?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      users?.find(user => user.id === parseInt(item.assigned_to))?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.accommodation_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.accommodation_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.request_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.task_status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.task_priority.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredContent(newFilteredData);
+    if (content) {
+      const newFilteredData = content.filter(item =>
+        item.id === Number(searchTerm) ||
+        item.reported_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        users?.find(user => user.id === parseInt(item.assigned_to))?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        users?.find(user => user.id === parseInt(item.assigned_to))?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.accommodation_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.accommodation_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.request_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.task_status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.task_priority.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredContent(newFilteredData);
+    }
+
   }, [searchTerm, content]);
 
   if (loading) {
