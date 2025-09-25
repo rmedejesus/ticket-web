@@ -3,7 +3,7 @@ import type { ITicket } from "../types/ticket";
 
 const calculateRange = (tickets: ITicket[], rowsPerPage: number) => {
   const range = [];
-  const num = Math.ceil(tickets.length / rowsPerPage);
+  const num = Math.ceil(tickets?.length / rowsPerPage);
   for (let i = 1; i <= num; i++) {
     range.push(i);
   }
