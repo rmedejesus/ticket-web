@@ -33,41 +33,73 @@ const UpdateTicketForm: React.FC = () => {
   }
 
   useEffect(() => {
-    TicketService.getTicket(id).then(
-      (response) => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [response1, response2] = await Promise.all([
+          await TicketService.getTicket(id),
+          await userService.getUsers()
+        ]);
+
+        setUsers(response2.data);
         setFormData({
-          reported_by: response.data.reported_by || '',
-          assigned_to: response.data.assigned_to.toString() || '',
-          accommodation_name: response.data.accommodation_name || '',
-          accommodation_room_number: response.data.accommodation_room_number.toString() || '0',
-          accommodation_specific_location: response.data.accommodation_specific_location || '',
-          accommodation_type: response.data.accommodation_type || '',
-          request_type: response.data.request_type || '',
-          request_detail: response.data.request_detail || '',
-          task_priority: response.data.task_priority || '',
-          note: response.data.note || '',
+          reported_by: response1.data.reported_by || '',
+          assigned_to: response1.data.assigned_to.toString() || '',
+          accommodation_name: response1.data.accommodation_name || '',
+          accommodation_room_number: response1.data.accommodation_room_number.toString() || '0',
+          accommodation_specific_location: response1.data.accommodation_specific_location || '',
+          accommodation_type: response1.data.accommodation_type || '',
+          request_type: response1.data.request_type || '',
+          request_detail: response1.data.request_detail || '',
+          task_priority: response1.data.task_priority || '',
+          note: response1.data.note || '',
         });
-      },
-      (error) => {
-        const _content = error.response.data.error;
-
-        setMessage(_content);
+      } catch (err) {
+        setLoading(false);
+      } finally {
+        setLoading(false);
       }
-    );
+    };
+
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    userService.getUsers().then(
-      (response) => {
-        setUsers(response.data);
-      },
-      (error) => {
-        const _content = error.response.data.error;
+  // useEffect(() => {
+  //   TicketService.getTicket(id).then(
+  //     (response) => {
+  //       setFormData({
+  //         reported_by: response.data.reported_by || '',
+  //         assigned_to: response.data.assigned_to.toString() || '',
+  //         accommodation_name: response.data.accommodation_name || '',
+  //         accommodation_room_number: response.data.accommodation_room_number.toString() || '0',
+  //         accommodation_specific_location: response.data.accommodation_specific_location || '',
+  //         accommodation_type: response.data.accommodation_type || '',
+  //         request_type: response.data.request_type || '',
+  //         request_detail: response.data.request_detail || '',
+  //         task_priority: response.data.task_priority || '',
+  //         note: response.data.note || '',
+  //       });
+  //     },
+  //     (error) => {
+  //       const _content = error.response.data.error;
 
-        setMessage(_content);
-      }
-    );
-  }, []);
+  //       setMessage(_content);
+  //     }
+  //   );
+  // }, []);
+
+  // useEffect(() => {
+  //   userService.getUsers().then(
+  //     (response) => {
+  //       setUsers(response.data);
+  //     },
+  //     (error) => {
+  //       const _content = error.response.data.error;
+
+  //       setMessage(_content);
+  //     }
+  //   );
+  // }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

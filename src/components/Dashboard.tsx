@@ -68,7 +68,7 @@ const Dashboard: React.FC = () => {
         setUsers(response1.data);
         setContent(response2.data);
       } catch (err) {
-        
+        setLoading(false);
       } finally {
         setLoading(false);
       }
