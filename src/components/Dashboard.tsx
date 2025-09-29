@@ -10,67 +10,93 @@ import TicketTable from './TicketTable';
 const Dashboard: React.FC = () => {
   const [content, setContent] = useState<ITicket[]>([]);
   const [filteredContent, setFilteredContent] = useState<ITicket[]>([]);
-  const [users, setUsers] = useState<IUser[]>();
+  const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    TicketService.getTickets().then(
-      async (response) => {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setContent(response.data);
-        setLoading(false);
-      },
-      (error) => {
-        const _content = error.response.data.error;
+  // useEffect(() => {
+  //   TicketService.getTickets().then(
+  //     (response) => {
+  //       setContent(response.data);
+  //       setLoading(false);
+  //     },
+  //     (error) => {
+  //       const _content = error.response.data.error;
+  //       setLoading(false);
+  //       setContent(_content);
+  //     }
+  //   );
+  // }, []);
 
-        setContent(_content);
+  // useEffect(() => {
+  //   // const fetchUsers = async () => {
+  //   //   try {
+  //   //     const response = await userService.getUsers();
+  //   //     debugger;
+  //   //     setUsers(response.data);
+  //   //     setLoading(false);
+  //   //   } catch (error) {
+  //   //     setLoading(false);
+  //   //   }
+  //   // }
+
+  //   // fetchUsers();
+  //   userService.getUsers().then(
+  //     (response) => {
+  //       setUsers(response.data);
+  //       setLoading(false);
+  //     },
+  //     (error) => {
+  //       const _content = error.response.data.error;
+  //       setLoading(false);
+  //       setUsers(_content);
+  //     }
+  //   );
+  // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [response1, response2] = await Promise.all([
+          await userService.getUsers(),
+          await TicketService.getTickets()
+        ]);
+
+        setUsers(response1.data);
+        setContent(response2.data);
+      } catch (err) {
+        
+      } finally {
+        setLoading(false);
       }
-    );
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
-    // const fetchUsers = async () => {
-    //   try {
-    //     const response = await userService.getUsers();
+    if (Array.isArray(content)) {
+      if (content.length > 0) {
+        const newFilteredData = content.filter(item =>
+          item.id === Number(searchTerm) ||
+          item.reported_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          users?.find(user => user.id === parseInt(item.assigned_to))?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          users?.find(user => user.id === parseInt(item.assigned_to))?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.accommodation_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.accommodation_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.request_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.task_status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.task_priority.toLowerCase().includes(searchTerm.toLowerCase())
+        );
 
-    //     setUsers(response.data);
-    //     setLoading(false);
-    //   } catch (error) {
-    //     const _content = error;
-
-    //     setUsers(_content);
-    //   }
-    // }
-    userService.getUsers().then(
-      async (response) => {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setUsers(response.data);
-        setLoading(false);
-      },
-      (error) => {
-        const _content = error.response.data.error;
-
-        setUsers(_content);
+        setFilteredContent(newFilteredData);
+        
       }
-    );
-  }, []);
-
-  useEffect(() => {
-    const newFilteredData = content.filter(item =>
-      item.id === Number(searchTerm) ||
-      item.reported_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      users?.find(user => user.id === parseInt(item.assigned_to))?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      users?.find(user => user.id === parseInt(item.assigned_to))?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.accommodation_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.accommodation_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.request_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.task_status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.task_priority.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredContent(newFilteredData);
+    }
+    setLoading(false);
   }, [searchTerm, content]);
 
   if (loading) {
@@ -96,7 +122,7 @@ const Dashboard: React.FC = () => {
         />
       </div>
       <div id="table-container">
-        {filteredContent != null ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : <p>No data</p>}
+        {filteredContent.length > 0 && users.length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : <p>No data</p>}
         {/* {filteredContent !== null ? (filteredContent as ITicket[]).length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : content !== null ? (content as ITicket[]).length > 0 ? <TicketTable data={content!} users={users!} rowsPerPage={7} /> : <p>No data</p> : <p>No data</p> : <p>No data</p>} */}
       </div>
     </div>

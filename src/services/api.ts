@@ -12,7 +12,7 @@ instance.interceptors.request.use(
   (config) => {
     const token = TokenService.getLocalAccessToken();
     if (token) {
-      config.headers["Authorization"] = token.token_type + ' ' + token.token;  // for Spring Boot back-end
+      config.headers.Authorization = token.token_type + ' ' + token.token;  // for Spring Boot back-end
       //config.headers["x-access-token"] = token; // for Node.js Express back-end
     }
     return config;
@@ -27,7 +27,6 @@ instance.interceptors.response.use(
     return res;
   },
   async (err) => {
-    debugger;
     const originalConfig = err.config;
     if (originalConfig.url !== "/login" && err.response) {
       // Access Token was expired
@@ -44,6 +43,8 @@ instance.interceptors.response.use(
 
           const accessToken = rs.data;
           TokenService.updateLocalAccessToken(accessToken);
+          const updatedToken = TokenService.getLocalAccessToken();
+          originalConfig.headers.Authorization = updatedToken.token_type + ' ' + updatedToken.token;
 
           return instance(originalConfig);
         } catch (_error) {
