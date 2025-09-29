@@ -16,8 +16,6 @@ const Dashboard: React.FC = () => {
 
   const navigate = useNavigate();
 
-  setLoading(true);
-
   // useEffect(() => {
   //   TicketService.getTickets().then(
   //     (response) => {
