@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
   const [content, setContent] = useState<ITicket[]>([]);
   const [filteredContent, setFilteredContent] = useState<ITicket[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
   const navigate = useNavigate();
@@ -67,9 +67,9 @@ const Dashboard: React.FC = () => {
         setUsers(response1.data);
         setContent(response2.data);
       } catch (err) {
-        setLoading(false);
+        //setLoading(false);
       } finally {
-        setLoading(false);
+        //setLoading(false);
       }
     };
 
@@ -95,7 +95,7 @@ const Dashboard: React.FC = () => {
         
       }
     }
-    setLoading(false);
+    //setLoading(false);
   }, [searchTerm, content]);
   // debugger;
   // if (loading) {
