@@ -39,7 +39,7 @@ const UpdateTicketForm: React.FC = () => {
           reported_by: response.data.reported_by || '',
           assigned_to: response.data.assigned_to.toString() || '',
           accommodation_name: response.data.accommodation_name || '',
-          accommodation_room_number: response.data.accommodation_room_number || '0',
+          accommodation_room_number: response.data.accommodation_room_number.toString() || '0',
           accommodation_specific_location: response.data.accommodation_specific_location || '',
           accommodation_type: response.data.accommodation_type || '',
           request_type: response.data.request_type || '',
@@ -86,7 +86,7 @@ const UpdateTicketForm: React.FC = () => {
       () => {
         setLoading(false);
         alert("Ticket updated successfully.");
-        navigate('/');
+        navigate('/dashboard');
       },
       (error) => {
         const resMessage = error.response.data.error;

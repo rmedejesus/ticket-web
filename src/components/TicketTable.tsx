@@ -66,13 +66,11 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
   };
 
   const handleDeleteTicket = async (id: string) => {
-    debugger;
     setItemIdToDelete(id);
     handleShow();
   };
 
   const confirmDeleteTicket = async () => {
-    debugger;
     await TicketService.deleteTicket(itemIdToDelete).then(
       () => {
         alert("Ticket deleted successfully.");

@@ -58,7 +58,7 @@ const CreateTicketForm: React.FC = () => {
       () => {
         setLoading(false);
         alert("Ticket created successfully.");
-        navigate('/');
+        navigate('/dashboard');
       },
       (error) => {
         setLoading(false);

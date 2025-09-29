@@ -2,7 +2,7 @@ import axios from "axios";
 import TokenService from "./token.service";
 
 const instance = axios.create({
-  baseURL: "https://192.168.1.57:8080/api/v1",
+  baseURL: "https://ticketing-service-964914219323.asia-northeast3.run.app/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
@@ -11,7 +11,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     const token = TokenService.getLocalAccessToken();
-
     if (token) {
       config.headers["Authorization"] = token.token_type + ' ' + token.token;  // for Spring Boot back-end
       //config.headers["x-access-token"] = token; // for Node.js Express back-end
@@ -28,6 +27,7 @@ instance.interceptors.response.use(
     return res;
   },
   async (err) => {
+    debugger;
     const originalConfig = err.config;
     if (originalConfig.url !== "/login" && err.response) {
       // Access Token was expired
@@ -40,7 +40,7 @@ instance.interceptors.response.use(
 
         try {
           const token = TokenService.getLocalAccessToken();
-          const rs = await axios.post("https://192.168.1.57:8080/api/v1/refresh-token", { refresh_token: token.refresh_token });
+          const rs = await axios.post("https://ticketing-service-964914219323.asia-northeast3.run.app/api/v1/refresh-token", { refresh_token: token.refresh_token });
 
           const accessToken = rs.data;
           TokenService.updateLocalAccessToken(accessToken);

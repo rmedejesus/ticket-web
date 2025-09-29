@@ -8,12 +8,15 @@ class AuthService {
         email,
         password
       })
-      .then(response => {      
+      .then(response => {
         if (response.data) {
           TokenService.setUser(response.data);
         }
 
         return response.data;
+      })
+      .catch(error => {
+        return error.response.data.error;
       });
   }
 
