@@ -16,6 +16,8 @@ const Dashboard: React.FC = () => {
 
   const navigate = useNavigate();
 
+  setLoading(true);
+
   // useEffect(() => {
   //   TicketService.getTickets().then(
   //     (response) => {
@@ -59,7 +61,6 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
         const [response1, response2] = await Promise.all([
           await userService.getUsers(),
           await TicketService.getTickets()
@@ -98,10 +99,10 @@ const Dashboard: React.FC = () => {
     }
     setLoading(false);
   }, [searchTerm, content]);
-
-  if (loading) {
-    return <div id="loading-data"><p className="spinner-grow custom-spinner-size text-danger"></p><h3>Loading tickets...</h3></div>;
-  }
+  // debugger;
+  // if (loading) {
+  //   return <div id="loading-data"><p className="spinner-grow custom-spinner-size text-danger"></p><h3>Loading tickets...</h3></div>;
+  // }
 
   const handleCreateTicket = () => {
     navigate('/create-ticket');
@@ -122,7 +123,7 @@ const Dashboard: React.FC = () => {
         />
       </div>
       <div id="table-container">
-        {filteredContent.length > 0 && users.length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : <p>No data</p>}
+        {loading && (filteredContent.length > 0 && users.length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : <p>No data</p>)}
         {/* {filteredContent !== null ? (filteredContent as ITicket[]).length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : content !== null ? (content as ITicket[]).length > 0 ? <TicketTable data={content!} users={users!} rowsPerPage={7} /> : <p>No data</p> : <p>No data</p> : <p>No data</p>} */}
       </div>
     </div>
