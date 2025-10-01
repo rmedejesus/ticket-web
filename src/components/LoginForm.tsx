@@ -16,22 +16,25 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await AuthService.login(email, password).then(
-      () => {
-        userService.getMe().then(
-          async (response) => {
-            localStorage.setItem("user", JSON.stringify(response.data));
-            login({ id: response.data.id, first_name: response.data.first_name, last_name: response.data.last_name });
-          },
-          () => {
-            navigate('/login');
-          }
-        );
-        navigate('/dashboard');
-      },
-      (error) => {
-        const resMessage = error;
+      (response) => {
+        debugger;
+        if (response.status === 401) {
+          const resMessage = response.data.error;
 
-        setMessage(resMessage);
+          setMessage(resMessage);
+        } else {
+          userService.getMe().then(
+            async (response) => {
+              localStorage.setItem("user", JSON.stringify(response.data));
+              login({ id: response.data.id, first_name: response.data.first_name, last_name: response.data.last_name });
+            },
+            () => {
+              navigate('/login');
+            }
+          );
+          navigate('/dashboard');
+        }
+
       }
     )
   };

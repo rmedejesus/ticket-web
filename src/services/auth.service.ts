@@ -16,7 +16,7 @@ class AuthService {
         return response.data;
       })
       .catch(error => {
-        return error.response.data.error;
+        return error.response;
       });
   }
 
