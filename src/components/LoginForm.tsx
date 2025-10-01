@@ -17,7 +17,6 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     await AuthService.login(email, password).then(
       (response) => {
-        debugger;
         if (response.status === 401) {
           const resMessage = response.data.error;
 
