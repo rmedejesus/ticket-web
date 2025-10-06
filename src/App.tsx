@@ -9,10 +9,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import TicketNavbar from './components/TicketNavbar';
 
 const isAuthenticated = () => {
+  debugger;
   const token = tokenService.getLocalAccessToken();
   if (!token) {
     return false; // No token provided, consider it expired
   }
+
+  return true;
 };
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
