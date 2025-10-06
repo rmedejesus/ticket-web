@@ -13,6 +13,7 @@ const CreateTicketForm: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [users, setUsers] = useState<IUser[]>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [isDropdownDisabled, setIsDropdownDisabled] = useState(false);
   const [formData, setFormData] = useState<ITicketRequest>({
     reported_by: '',
     assigned_to: '',
@@ -42,6 +43,16 @@ const CreateTicketForm: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+
+    if (name === "accommodation_type" && value === "Staff") {
+      setIsDropdownDisabled(true);
+      formData.assigned_to = "iNciDWxoTHOEP38MnZIy";
+    }
+
+    if (name === "accommodation_type" && value === "Guest") {
+      setIsDropdownDisabled(false);
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -54,6 +65,7 @@ const CreateTicketForm: React.FC = () => {
     e.preventDefault();
     setMessage("");
     setLoading(true);
+
     await TicketService.createTicket(formData).then(
       () => {
         setLoading(false);
@@ -61,6 +73,7 @@ const CreateTicketForm: React.FC = () => {
         navigate('/dashboard');
       },
       (error) => {
+        debugger;
         setLoading(false);
         const resMessage = error.response.data.error;
         setMessage(resMessage);
@@ -80,7 +93,7 @@ const CreateTicketForm: React.FC = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label htmlFor="assigned_to">Assigned To: </Form.Label>
-              <Form.Select required id="assigned_to" name="assigned_to" value={formData.assigned_to} onChange={handleChange}>
+              <Form.Select required id="assigned_to" name="assigned_to" value={formData.assigned_to} onChange={handleChange} disabled={isDropdownDisabled}>
                 <option value="">Select an option</option>
                 {users?.map((user) => (
                   <option key={user.email} value={user.id}>
