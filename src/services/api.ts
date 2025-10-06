@@ -53,7 +53,7 @@ instance.interceptors.response.use(
           TokenService.removeUser();
           const err = _error as AxiosError;
           if (err.config?.url === "https://ticket-service-964914219323.asia-northeast3.run.app/api/v1/auth/refresh-token" && err.status === 401) {
-            window.location.href = "https://localhost:5173/";
+            window.location.href = "https://ticket-web-wu7p.onrender.com/";
           }
           //return Promise.reject(_error);
         }
