@@ -17,7 +17,7 @@ const CreateTicketForm: React.FC = () => {
     reported_by: '',
     assigned_to: '',
     accommodation_name: '',
-    accommodation_room_number: '0',
+    accommodation_room_number: '',
     accommodation_specific_location: '',
     accommodation_type: '',
     request_type: '',
@@ -30,7 +30,7 @@ const CreateTicketForm: React.FC = () => {
   useEffect(() => {
     userService.getUsers().then(
       (response) => {
-        setUsers(response.data);
+        setUsers(response.data.users);
       },
       (error) => {
         const _content = error.response.data.error;
@@ -101,7 +101,7 @@ const CreateTicketForm: React.FC = () => {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="accommodation_room_number">Room Number: </Form.Label>
               <Form.Select id="accommodation_room_number" name="accommodation_room_number" value={formData.accommodation_room_number} onChange={handleChange}>
-                <option value="0">Select an option</option> {/* Optional: default empty option */}
+                <option value="">Select an option</option> {/* Optional: default empty option */}
                 <option key="1" value="301">301</option>
                 <option key="2" value="402">402</option>
                 <option key="3" value="203">203</option>

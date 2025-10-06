@@ -5,38 +5,35 @@ import CreateTicketForm from './components/CreateTicketForm';
 import UpdateTicketForm from './components/UpdateTicketForm';
 import './App.css'
 import tokenService from './services/token.service';
-import { jwtDecode } from 'jwt-decode';
-import type { ITokenDecode } from './types/token-decode';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TicketNavbar from './components/TicketNavbar';
-import { UserProvider } from './context/user.context';
 
 const isAuthenticated = () => {
   const token = tokenService.getLocalAccessToken();
   if (!token) {
     return false; // No token provided, consider it expired
   }
-  try {
-    const decodedToken = jwtDecode<ITokenDecode>(token.refresh_token);
-    const currentTime = Date.now() / 1000; // Convert milliseconds to seconds
-    return decodedToken.exp > currentTime;
-  } catch (error) {
-    console.error('Error decoding token:', error);
-    return false; // Handle decoding errors, e.g., malformed token
-  }
+  // try {
+  //   const decodedToken = jwtDecode<ITokenDecode>(token.refresh_token);
+  //   const currentTime = Date.now() / 1000; // Convert milliseconds to seconds
+  //   return decodedToken.exp > currentTime;
+  // } catch (error) {
+  //   console.error('Error decoding token:', error);
+  //   return false; // Handle decoding errors, e.g., malformed token
+  // }
 };
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return isAuthenticated() ? <>{children}</> : <Navigate to="/login" />;
+  var x = tokenService.getLocalAccessToken();
+  return x ? <>{children}</> : <Navigate to="/login" />;
 };
 
 const App: React.FC = () => {
   return (
-    <UserProvider>
       <Router>
         <TicketNavbar />
         <Routes>
-          <Route path="*" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <LoginForm />} />
+          {<Route path="*" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <LoginForm />} />}
           <Route
             path="/login"
             element={
@@ -69,7 +66,6 @@ const App: React.FC = () => {
           />
         </Routes>
       </Router>
-    </UserProvider>
 
   );
 };

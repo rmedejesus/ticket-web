@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import TokenService from "./token.service";
 
 const instance = axios.create({
-  baseURL: "https://ticketing-service-964914219323.asia-northeast3.run.app/api/v1",
+  baseURL: "https://ticket-service-964914219323.asia-northeast3.run.app/api/v1/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,7 +12,7 @@ instance.interceptors.request.use(
   (config) => {
     const token = TokenService.getLocalAccessToken();
     if (token) {
-      config.headers.Authorization = token.token_type + ' ' + token.token;  // for Spring Boot back-end
+      config.headers.Authorization = "Bearer " + token.access;  // for Spring Boot back-end
       //config.headers["x-access-token"] = token; // for Node.js Express back-end
     }
     return config;
@@ -39,16 +39,23 @@ instance.interceptors.response.use(
 
         try {
           const token = TokenService.getLocalAccessToken();
-          const rs = await axios.post("https://ticketing-service-964914219323.asia-northeast3.run.app/api/v1/refresh-token", { refresh_token: token.refresh_token });
-
-          const accessToken = rs.data;
+          const user = TokenService.getUser();
+          // const rs = await axios.post("https://ticketing-service-964914219323.asia-northeast3.run.app/api/v1/refresh-token", { refresh_token: token.refresh_token });
+          const rs = await axios.post("https://ticket-service-964914219323.asia-northeast3.run.app/api/v1/auth/refresh-token", { id: user.id, refresh_token: token.refresh });
+          
+          const accessToken = rs.data.token;
           TokenService.updateLocalAccessToken(accessToken);
           const updatedToken = TokenService.getLocalAccessToken();
-          originalConfig.headers.Authorization = updatedToken.token_type + ' ' + updatedToken.token;
+          originalConfig.headers.Authorization = "Bearer " + updatedToken.access;
 
           return instance(originalConfig);
         } catch (_error) {
-          return Promise.reject(_error);
+          TokenService.removeUser();
+          const err = _error as AxiosError;
+          if (err.config?.url === "https://ticket-service-964914219323.asia-northeast3.run.app/api/v1/auth/refresh-token" && err.status === 401) {
+            window.location.href = "https://localhost:5173/";
+          }
+          //return Promise.reject(_error);
         }
       }
     }

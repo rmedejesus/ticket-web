@@ -4,13 +4,13 @@ import TokenService from "./token.service";
 class AuthService {
   login(email: string, password: string) {
     return api
-      .post("/login", {
+      .post("/auth/login", {
         email,
         password
       })
       .then(response => {
         if (response.data) {
-          TokenService.setUser(response.data);
+          TokenService.setUserAndToken(response.data.user, response.data.token);
         }
 
         return response.data;

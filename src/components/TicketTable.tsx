@@ -4,7 +4,7 @@ import styles from "../Table.module.css";
 import TableFooter from "./TableFooter";
 import type { ITicket } from "../types/ticket";
 import type { IUser } from "../types/user";
-import { Button, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import TicketService from '../services/ticket.service';
 
@@ -18,18 +18,10 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
   const [page, setPage] = useState<number>(1);
   const { slice, range } = useTable(data, page, rowsPerPage);
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
-  const [itemIdToDelete, setItemIdToDelete] = useState('');
-
-  const handleClose = () => {
-    setShow(false);
-    setItemIdToDelete('');
-  }
-  const handleShow = () => setShow(true);
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleUpdateTicket = (id: number) => {
+  const handleUpdateTicket = (id: string) => {
     navigate('/update-ticket/' + id);
   };
 
@@ -65,25 +57,6 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
     );
   };
 
-  const handleDeleteTicket = async (id: string) => {
-    setItemIdToDelete(id);
-    handleShow();
-  };
-
-  const confirmDeleteTicket = async () => {
-    await TicketService.deleteTicket(itemIdToDelete).then(
-      () => {
-        alert("Ticket deleted successfully.");
-        handleClose();
-        window.location.reload();
-      },
-      (error) => {
-        const resMessage = error.response.data.error;
-        alert(resMessage);
-      }
-    );
-  };
-
   return (
     <>
       <table className={styles.table}>
@@ -104,15 +77,16 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
             <th className={styles.tableHeader}>Image</th>
             <th className={styles.tableHeader}>Alert Level</th>
             <th className={styles.tableHeader}>Created Date</th>
+            <th className={styles.tableHeader}>Completed Date</th>
             <th className={styles.tableHeader}></th>
           </tr>
         </thead>
         <tbody>
           {slice.map((el: ITicket) => (
             <tr className={styles.tableRowItems} key={el.id}>
-              <td className={styles.tableCell}>{el.id}</td>
+              <td className={styles.tableCell}>{el.ticket_id}</td>
               <td className={styles.tableCell}>{el.reported_by}</td>
-              <td className={styles.tableCell}>{users?.find(user => user.id === parseInt(el.assigned_to))?.first_name + " " + users?.find(user => user.id === parseInt(el.assigned_to))?.last_name}</td>
+              <td className={styles.tableCell}>{users?.find(user => user.id === el.assigned_to)?.first_name + " " + users?.find(user => user.id === el.assigned_to)?.last_name}</td>
               <td className={styles.tableCell}>{el.accommodation_name}</td>
               <td className={styles.tableCell}>{el.accommodation_room_number == "0" ? "N/A" : el.accommodation_room_number}</td>
               <td className={styles.tableCell}>{el.accommodation_specific_location}</td>
@@ -125,10 +99,11 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
               <td className={styles.tableCell}>{el.image}</td>
               <td className={styles.tableCell}>{el.task_status === "Completed" ? (<p className="perfect-alert">Done</p>) : el.alert_level == 0 ? (<p className="good-alert">Not Completed</p>) : el.alert_level == 1 ? (<p className="warn-alert">Not Completed</p>) : (<p className="red-alert">Not Completed</p>)}</td>
               <td className={styles.tableCell}>{el.created_date}</td>
+              <td className={styles.tableCell}>{el.completed_date}</td>
               <td id="last-cell" className={styles.tableCell}>
                 {el.task_status === "Assigned" ?
                   <div>
-                    <Button className="text-nowrap btn-sm edit-btn" onClick={() => handlePendingTicket(el.id.toString())}>
+                    <Button className="text-nowrap btn-sm edit-btn" onClick={() => handlePendingTicket(el.id)}>
                       Mark as Pending
                     </Button>
                     <Button className="text-nowrap btn-sm edit-btn" onClick={() => handleUpdateTicket(el.id)}>
@@ -142,26 +117,11 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
                     <Button className="text-nowrap btn-sm edit-btn" onClick={() => handleUpdateTicket(el.id)}>
                       <i className="fa fa-pencil"></i>
                     </Button>
-                  </div> : ""
+                  </div> :
+                    <Button className="text-nowrap btn-sm edit-btn" onClick={() => handleUpdateTicket(el.id)}>
+                      <i className="fa fa-pencil"></i>
+                    </Button>
                 }
-
-                <Button className="text-nowrap btn-sm btn-danger delete-btn" onClick={() => handleDeleteTicket(el.id.toString())}>
-                  <i className="fa fa-trash"></i>
-                </Button>
-                <Modal show={show} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Delete Ticket</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>Are you sure you want to delete this ticket?</Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      Close
-                    </Button>
-                    <Button variant="primary" onClick={confirmDeleteTicket}>
-                      Delete
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
               </td>
             </tr>
           ))}

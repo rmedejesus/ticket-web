@@ -16,7 +16,7 @@ const UpdateTicketForm: React.FC = () => {
     reported_by: '',
     assigned_to: '',
     accommodation_name: '',
-    accommodation_room_number: '0',
+    accommodation_room_number: '',
     accommodation_specific_location: '',
     accommodation_type: '',
     request_type: '',
@@ -40,19 +40,19 @@ const UpdateTicketForm: React.FC = () => {
           await TicketService.getTicket(id),
           await userService.getUsers()
         ]);
-
-        setUsers(response2.data);
+        
+        setUsers(response2.data.users);
         setFormData({
-          reported_by: response1.data.reported_by || '',
-          assigned_to: response1.data.assigned_to.toString() || '',
-          accommodation_name: response1.data.accommodation_name || '',
-          accommodation_room_number: response1.data.accommodation_room_number.toString() || '0',
-          accommodation_specific_location: response1.data.accommodation_specific_location || '',
-          accommodation_type: response1.data.accommodation_type || '',
-          request_type: response1.data.request_type || '',
-          request_detail: response1.data.request_detail || '',
-          task_priority: response1.data.task_priority || '',
-          note: response1.data.note || '',
+          reported_by: response1.data.ticket.reported_by || '',
+          assigned_to: response1.data.ticket.assigned_to.toString() || '',
+          accommodation_name: response1.data.ticket.accommodation_name || '',
+          accommodation_room_number: response1.data.ticket.accommodation_room_number.toString() || '',
+          accommodation_specific_location: response1.data.ticket.accommodation_specific_location || '',
+          accommodation_type: response1.data.ticket.accommodation_type || '',
+          request_type: response1.data.ticket.request_type || '',
+          request_detail: response1.data.ticket.request_detail || '',
+          task_priority: response1.data.ticket.task_priority || '',
+          note: response1.data.ticket.note || '',
         });
       } catch (err) {
         setLoading(false);
@@ -152,7 +152,7 @@ const UpdateTicketForm: React.FC = () => {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="accommodation_name">Accommodation Name: </Form.Label>
               <Form.Select id="accommodation_name" name="accommodation_name" value={formData.accommodation_name} onChange={handleChange}>
-                <option value="0">Select an option</option> {/* Optional: default empty option */}
+                <option value="">Select an option</option> {/* Optional: default empty option */}
                 <option key="1" value="Shinka Niseko">Shinka Niseko</option>
                 <option key="2" value="Ezo Yume">Ezo Yume</option>
                 <option key="3" value="Powder Haven">Powder Haven</option>
@@ -161,7 +161,7 @@ const UpdateTicketForm: React.FC = () => {
             <Form.Group className="mb-3">
               <Form.Label htmlFor="accommodation_room_number">Room Number: </Form.Label>
               <Form.Select id="accommodation_room_number" name="accommodation_room_number" value={formData.accommodation_room_number} onChange={handleChange}>
-                <option value="0">Select an option</option> {/* Optional: default empty option */}
+                <option value="">Select an option</option> {/* Optional: default empty option */}
                 <option key="1" value="301">301</option>
                 <option key="2" value="402">402</option>
                 <option key="3" value="203">203</option>

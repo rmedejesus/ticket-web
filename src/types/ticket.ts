@@ -1,5 +1,6 @@
 export interface ITicket {
-  id: number;
+  id: string;
+  ticket_id: string;
 	reported_by?: string;
 	accommodation_name: string;
 	accommodation_room_number?: string;
@@ -14,7 +15,7 @@ export interface ITicket {
 	note?: string;
 	image?: Uint8Array;
   created_date: string;
-  completion_date: string;
+  completed_date: string;
 }
 
 export interface ITicketRequest {

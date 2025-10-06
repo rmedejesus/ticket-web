@@ -64,8 +64,9 @@ const Dashboard: React.FC = () => {
           await TicketService.getTickets()
         ]);
 
-        setUsers(response1.data);
-        setContent(response2.data);
+        setUsers(response1.data.users);
+        setContent(response2.data.tickets);
+
       } catch (err) {
         //setLoading(false);
       } finally {
@@ -80,10 +81,10 @@ const Dashboard: React.FC = () => {
     if (Array.isArray(content)) {
       if (content.length > 0) {
         const newFilteredData = content.filter(item =>
-          item.id === Number(searchTerm) ||
+          item.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.reported_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          users?.find(user => user.id === parseInt(item.assigned_to))?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          users?.find(user => user.id === parseInt(item.assigned_to))?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          users?.find(user => user.id === item.assigned_to)?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          users?.find(user => user.id === item.assigned_to)?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.accommodation_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.accommodation_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.request_type.toLowerCase().includes(searchTerm.toLowerCase()) ||

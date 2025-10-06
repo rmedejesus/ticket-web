@@ -1,15 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import AuthService from '../services/auth.service';
 import { useNavigate } from 'react-router-dom';
-import userService from '../services/user.service';
-import { UserContext } from '../context/user.context';
 import { Button, Container, Form } from 'react-bootstrap';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState<string>("");
-  const { login } = useContext(UserContext);
+  //const { login } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -19,21 +17,19 @@ const LoginForm: React.FC = () => {
       (response) => {
         if (response.status === 401) {
           const resMessage = response.data.error;
-
           setMessage(resMessage);
         } else {
-          userService.getMe().then(
-            async (response) => {
-              localStorage.setItem("user", JSON.stringify(response.data));
-              login({ id: response.data.id, first_name: response.data.first_name, last_name: response.data.last_name });
-            },
-            () => {
-              navigate('/login');
-            }
-          );
+          // userService.getMe().then(
+          //   async (response) => {
+          //     localStorage.setItem("user", JSON.stringify(response.data));
+          //     login({ id: response.data.id, first_name: response.data.first_name, last_name: response.data.last_name });
+          //   },
+          //   () => {
+          //     navigate('/login');
+          //   }
+          // );
           navigate('/dashboard');
         }
-
       }
     )
   };

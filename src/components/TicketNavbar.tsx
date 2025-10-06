@@ -2,23 +2,30 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useContext } from 'react';
-import type { ILoggedUser } from '../types/user';
-import { UserContext } from '../context/user.context';
+import { useNavigate } from 'react-router-dom';
+import AuthService from '../services/auth.service';
 
 const TicketNavbar: React.FC = () => {
-  let { user, logout } = useContext(UserContext);
-  const userData = JSON.parse(localStorage.getItem("user")!);
+  //let { user, logout } = useContext(UserContext);
+  const userData = AuthService.getCurrentUser();
 
-  if (user === null && userData !== null) {
-    const newUser: ILoggedUser = {
-      id: userData.id,
-      first_name: userData.first_name,
-      last_name: userData.last_name,
-    };
+  // if (userData !== null) {
+  //   const newUser: ILoggedUser = {
+  //     id: userData.id,
+  //     first_name: userData.first_name,
+  //     last_name: userData.last_name,
+  //   };
 
-    user = newUser;
-  }
+  //   IUser user = newUser;
+  // }
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await AuthService.logout();
+
+    navigate('/login');
+  };
 
   return (
     <Navbar expand="lg" className="sj-navbar navbar-dark bg-body-tertiary">
@@ -27,9 +34,9 @@ const TicketNavbar: React.FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {user &&
-              <NavDropdown align="end" title={"Welcome " + user!.first_name + ' ' + user!.last_name + '!'} id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={logout}>
+            {userData &&
+              <NavDropdown align="end" title={"Welcome " + userData!.first_name + ' ' + userData!.last_name + '!'} id="basic-nav-dropdown">
+                <NavDropdown.Item onClick={handleLogout}>
                   Logout
                 </NavDropdown.Item>
               </NavDropdown>
