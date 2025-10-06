@@ -25,7 +25,7 @@ const App: React.FC = () => {
       <Router>
         <TicketNavbar />
         <Routes>
-          {<Route path="*" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <LoginForm />} />}
+          {<Route path="/" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <LoginForm />} />}
           <Route
             path="/login"
             element={
