@@ -64,43 +64,6 @@ const UpdateTicketForm: React.FC = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   TicketService.getTicket(id).then(
-  //     (response) => {
-  //       setFormData({
-  //         reported_by: response.data.reported_by || '',
-  //         assigned_to: response.data.assigned_to.toString() || '',
-  //         accommodation_name: response.data.accommodation_name || '',
-  //         accommodation_room_number: response.data.accommodation_room_number.toString() || '0',
-  //         accommodation_specific_location: response.data.accommodation_specific_location || '',
-  //         accommodation_type: response.data.accommodation_type || '',
-  //         request_type: response.data.request_type || '',
-  //         request_detail: response.data.request_detail || '',
-  //         task_priority: response.data.task_priority || '',
-  //         note: response.data.note || '',
-  //       });
-  //     },
-  //     (error) => {
-  //       const _content = error.response.data.error;
-
-  //       setMessage(_content);
-  //     }
-  //   );
-  // }, []);
-
-  // useEffect(() => {
-  //   userService.getUsers().then(
-  //     (response) => {
-  //       setUsers(response.data);
-  //     },
-  //     (error) => {
-  //       const _content = error.response.data.error;
-
-  //       setMessage(_content);
-  //     }
-  //   );
-  // }, []);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({

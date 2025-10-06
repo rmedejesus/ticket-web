@@ -20,15 +20,6 @@ const LoginForm: React.FC = () => {
           const resMessage = response.data.error;
           setMessage(resMessage);
         } else {
-          // userService.getMe().then(
-          //   async (response) => {
-          //     localStorage.setItem("user", JSON.stringify(response.data));
-          //     login({ id: response.data.id, first_name: response.data.first_name, last_name: response.data.last_name });
-          //   },
-          //   () => {
-          //     navigate('/login');
-          //   }
-          // );
           navigate('/dashboard');
         }
       }

@@ -16,46 +16,6 @@ const Dashboard: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   TicketService.getTickets().then(
-  //     (response) => {
-  //       setContent(response.data);
-  //       setLoading(false);
-  //     },
-  //     (error) => {
-  //       const _content = error.response.data.error;
-  //       setLoading(false);
-  //       setContent(_content);
-  //     }
-  //   );
-  // }, []);
-
-  // useEffect(() => {
-  //   // const fetchUsers = async () => {
-  //   //   try {
-  //   //     const response = await userService.getUsers();
-  //   //     debugger;
-  //   //     setUsers(response.data);
-  //   //     setLoading(false);
-  //   //   } catch (error) {
-  //   //     setLoading(false);
-  //   //   }
-  //   // }
-
-  //   // fetchUsers();
-  //   userService.getUsers().then(
-  //     (response) => {
-  //       setUsers(response.data);
-  //       setLoading(false);
-  //     },
-  //     (error) => {
-  //       const _content = error.response.data.error;
-  //       setLoading(false);
-  //       setUsers(_content);
-  //     }
-  //   );
-  // }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -13,14 +13,6 @@ const isAuthenticated = () => {
   if (!token) {
     return false; // No token provided, consider it expired
   }
-  // try {
-  //   const decodedToken = jwtDecode<ITokenDecode>(token.refresh_token);
-  //   const currentTime = Date.now() / 1000; // Convert milliseconds to seconds
-  //   return decodedToken.exp > currentTime;
-  // } catch (error) {
-  //   console.error('Error decoding token:', error);
-  //   return false; // Handle decoding errors, e.g., malformed token
-  // }
 };
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
