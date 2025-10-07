@@ -75,7 +75,6 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
             <th className={styles.tableHeader}>Status</th>
             <th className={styles.tableHeader}>Priority</th>
             <th className={styles.tableHeader}>Notes</th>
-            <th className={styles.tableHeader}>Image</th>
             <th className={styles.tableHeader}>Alert Level</th>
             <th className={styles.tableHeader}>Created Date</th>
             <th className={styles.tableHeader}>Completed Date</th>
@@ -92,7 +91,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
               <td className={styles.tableCell}>{el.accommodation_room_number == "0" ? "N/A" : el.accommodation_room_number}</td>
               <td className={styles.tableCell}>{el.accommodation_specific_location}</td>
               <td className={styles.tableCell}>{el.accommodation_type}</td>
-              <td className={styles.tableCell}>{el.is_immediate_access ? "YES" : "NO"}</td>
+              <td className={styles.tableCell}>{el.is_immediate_access ? "Yes" : "No"}</td>
               <td className={styles.tableCell}>{el.request_type}</td>
               <td className={styles.tableCell}>{el.request_detail}</td>
               <td className={styles.tableCell}>{el.task_status}</td>
