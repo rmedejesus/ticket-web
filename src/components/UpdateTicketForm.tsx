@@ -23,7 +23,7 @@ const UpdateTicketForm: React.FC = () => {
     request_detail: '',
     task_priority: '',
     note: '',
-    //image: new Uint8Array([0, 0, 0, 0]),
+    is_immediate_access: '',
   });
 
   const { id } = useParams();
@@ -40,7 +40,7 @@ const UpdateTicketForm: React.FC = () => {
           await TicketService.getTicket(id),
           await userService.getUsers()
         ]);
-        
+
         setUsers(response2.data.users);
         setFormData({
           reported_by: response1.data.ticket.reported_by || '',
@@ -53,6 +53,7 @@ const UpdateTicketForm: React.FC = () => {
           request_detail: response1.data.ticket.request_detail || '',
           task_priority: response1.data.ticket.task_priority || '',
           note: response1.data.ticket.note || '',
+          is_immediate_access: response1.data.ticket.is_immediate_access.toString() || '',
         });
       } catch (err) {
         setLoading(false);
@@ -137,6 +138,14 @@ const UpdateTicketForm: React.FC = () => {
                 <option key="0" value="Lower Bathroom">Lower Bathroom</option>
                 <option key="1" value="Upper Bathroom">Upper Bathroom</option>
                 <option key="2" value="Guest Room">Guest Room</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="is_immediate_access">Has Immediate Access?: </Form.Label>
+              <Form.Select required id="is_immediate_access" name="is_immediate_access" value={formData.is_immediate_access} onChange={handleChange}>
+                <option value="">Select an option</option> {/* Optional: default empty option */}
+                <option key="0" value="true">Yes</option>
+                <option key="1" value="false">No</option>
               </Form.Select>
             </Form.Group>
           </div>

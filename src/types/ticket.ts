@@ -13,7 +13,7 @@ export interface ITicket {
 	alert_level: number;
 	assigned_to: string;
 	note?: string;
-	image?: Uint8Array;
+  is_immediate_access: boolean;
   created_date: string;
   completed_date: string;
 }
@@ -29,5 +29,5 @@ export interface ITicketRequest {
 	task_priority?: string;
 	assigned_to?: string;
 	note?: string;
-	//image?: Uint8Array;
+  is_immediate_access?: string;
 }

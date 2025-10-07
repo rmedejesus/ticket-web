@@ -69,6 +69,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
             <th className={styles.tableHeader}>Room No.</th>
             <th className={styles.tableHeader}>Specific Location</th>
             <th className={styles.tableHeader}>Accommodation Type</th>
+            <th className={styles.tableHeader}>Immediate Access</th>
             <th className={styles.tableHeader}>Request Type</th>
             <th className={styles.tableHeader}>Details</th>
             <th className={styles.tableHeader}>Status</th>
@@ -91,12 +92,12 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
               <td className={styles.tableCell}>{el.accommodation_room_number == "0" ? "N/A" : el.accommodation_room_number}</td>
               <td className={styles.tableCell}>{el.accommodation_specific_location}</td>
               <td className={styles.tableCell}>{el.accommodation_type}</td>
+              <td className={styles.tableCell}>{el.is_immediate_access ? "YES" : "NO"}</td>
               <td className={styles.tableCell}>{el.request_type}</td>
               <td className={styles.tableCell}>{el.request_detail}</td>
               <td className={styles.tableCell}>{el.task_status}</td>
               <td className={styles.tableCell}>{el.task_priority}</td>
               <td className={styles.tableCell}>{el.note}</td>
-              <td className={styles.tableCell}>{el.image}</td>
               <td className={styles.tableCell}>{el.task_status === "Completed" ? (<p className="perfect-alert">Done</p>) : el.alert_level == 0 ? (<p className="good-alert">Not Completed</p>) : el.alert_level == 1 ? (<p className="warn-alert">Not Completed</p>) : (<p className="red-alert">Not Completed</p>)}</td>
               <td className={styles.tableCell}>{el.created_date}</td>
               <td className={styles.tableCell}>{el.completed_date}</td>

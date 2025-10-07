@@ -25,7 +25,7 @@ const CreateTicketForm: React.FC = () => {
     request_detail: '',
     task_priority: '',
     note: '',
-    //image: new Uint8Array([0, 0, 0, 0]),
+    is_immediate_access: '',
   });
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const CreateTicketForm: React.FC = () => {
         navigate('/dashboard');
       },
       (error) => {
-        debugger;
+
         setLoading(false);
         const resMessage = error.response.data.error;
         setMessage(resMessage);
@@ -127,6 +127,14 @@ const CreateTicketForm: React.FC = () => {
                 <option key="0" value="Lower Bathroom">Lower Bathroom</option>
                 <option key="1" value="Upper Bathroom">Upper Bathroom</option>
                 <option key="2" value="Guest Room">Guest Room</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label htmlFor="is_immediate_access">Has Immediate Access?: </Form.Label>
+              <Form.Select required id="is_immediate_access" name="is_immediate_access" value={formData.is_immediate_access} onChange={handleChange}>
+                <option value="">Select an option</option> {/* Optional: default empty option */}
+                <option key="0" value="true">Yes</option>
+                <option key="1" value="false">No</option>
               </Form.Select>
             </Form.Group>
           </div>
