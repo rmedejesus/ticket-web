@@ -7,6 +7,7 @@ import type { IUser } from "../types/user";
 import { Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import TicketService from '../services/ticket.service';
+import TokenService from "../services/token.service";
 
 interface TableProps {
   data: ITicket[];
@@ -57,6 +58,8 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
     );
   };
 
+  const user = TokenService.getUser();
+
   return (
     <>
       <table className={styles.table}>
@@ -78,7 +81,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
             <th className={styles.tableHeader}>Alert Level</th>
             <th className={styles.tableHeader}>Created Date</th>
             <th className={styles.tableHeader}>Completed Date</th>
-            <th className={styles.tableHeader}></th>
+            {(user.id !== "HXMidxnxozPkc0Q1QgNU" && user.id !== "5XCQaqFvqjLk34jfw4VF") ? <th className={styles.tableHeader}></th> : ""}
           </tr>
         </thead>
         <tbody>
@@ -100,7 +103,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
               <td className={styles.tableCell}>{el.task_status === "Completed" ? (<p className="perfect-alert">Done</p>) : el.alert_level == 0 ? (<p className="good-alert">Not Completed</p>) : el.alert_level == 1 ? (<p className="warn-alert">Not Completed</p>) : (<p className="red-alert">Not Completed</p>)}</td>
               <td className={styles.tableCell}>{el.created_date}</td>
               <td className={styles.tableCell}>{el.completed_date}</td>
-              <td id="last-cell" className={styles.tableCell}>
+              {(user.id !== "HXMidxnxozPkc0Q1QgNU" && user.id !== "5XCQaqFvqjLk34jfw4VF") ? <td id="last-cell" className={styles.tableCell}>
                 {el.task_status === "Assigned" ?
                   <div>
                     <Button className="text-nowrap btn-sm edit-btn" onClick={() => handlePendingTicket(el.id)}>
@@ -122,7 +125,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
                       <i className="fa fa-pencil"></i>
                     </Button>
                 }
-              </td>
+              </td> : ""}
             </tr>
           ))}
         </tbody>

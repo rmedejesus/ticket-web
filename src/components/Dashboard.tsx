@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TicketService from '../services/ticket.service';
+import TokenService from "../services/token.service";
 import type { ITicket } from '../types/ticket';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,7 @@ const Dashboard: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const navigate = useNavigate();
+  const user = TokenService.getUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,9 +72,9 @@ const Dashboard: React.FC = () => {
   return (
     <div className="main-container">
       <div className="d-flex mb-4 gap-3 upper-container">
-        <Button className="text-nowrap create-btn" onClick={handleCreateTicket}>
+        {(user.id !== "HXMidxnxozPkc0Q1QgNU" && user.id !== "5XCQaqFvqjLk34jfw4VF") ? <Button className="text-nowrap create-btn" onClick={handleCreateTicket}>
           Create a New Ticket
-        </Button>
+        </Button> : ""}
         <input
           type="text"
           placeholder="Search by Staff Name, Accommodation Name, Accommodation Type, Request Type, Status, or Priority..."

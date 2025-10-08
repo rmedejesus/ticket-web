@@ -57,7 +57,7 @@ body {
 
 .search-terms {
   margin-left: auto;
-  width: 50%;
+  width: 65%;
 }
 
 @media (max-width: 480px) {
@@ -144,8 +144,8 @@ body {
 }
 
 .btn-primary:not(.delete-btn) {
-  background: #0a3049 !important;
-  border-color: #0a3049 !important;
+  background: #ed1c24 !important;
+  border-color: #ed1c24 !important;
 }
 
 .form-container {
@@ -160,7 +160,7 @@ body {
 }
 
 .sj-navbar {
-  background-color: #ed1c24 !important;
+  background-color: #0a3049 !important;
 }
 
 #basic-nav-dropdown {
