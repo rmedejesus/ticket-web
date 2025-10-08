@@ -1,3 +1,7 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
 .main-container {
   text-align: center;
   text-align: -webkit-center;
@@ -12,11 +16,22 @@
 .login-div {
   width: 50%;
   column-gap: 100px;
+  height: calc(100vh - 165px);
 }
 
 @media (max-width:1024px) {
   .form-div {
     flex-direction: column;
+  }
+
+  .form-layout {
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-layout div {
+    width: 100% !important;
   }
 
   .login-div {
@@ -53,6 +68,10 @@
 
   .create-btn {
     margin-right: 0;
+  }
+
+  .form-layout div {
+    width: 100% !important;
   }
 
   .search-terms {
