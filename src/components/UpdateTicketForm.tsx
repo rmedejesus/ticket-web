@@ -1095,7 +1095,7 @@ const UpdateTicketForm: React.FC = () => {
       <Form className="form-container w-100" onSubmit={handleSubmitForm}>
         <div className="d-flex gap-4 w-75 form-div flex-column mb-3">
           <div>
-            <h3 className="mt-4 mb-4"><strong>Basic Information</strong></h3>
+            <h4 className="mt-4 mb-4 text-start"><strong>Basic Information</strong></h4>
             <div className="w-100 d-flex flex-row gap-5 mb-2 form-layout">
               <Form.Group className="mb-3 w-50">
                 <Form.Label htmlFor="reported_by">Assigned By: </Form.Label>
@@ -1133,7 +1133,7 @@ const UpdateTicketForm: React.FC = () => {
             </div>
           </div>
           <div>
-            <h3 className="mt-2 mb-4"><strong>Accommodation Information</strong></h3>
+            <h4 className="mt-2 mb-4 text-start"><strong>Accommodation Information</strong></h4>
             <div className="w-100 d-flex flex-row gap-3 form-layout">
               <Form.Group className="mb-3 w-25">
                 <Form.Label htmlFor="accommodation_type">Accommodation Type: </Form.Label>
