@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import BackButton from './BackButton';
 import { Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import TokenService from "../services/token.service";
 
 interface AccommodationType {
   id: number;
@@ -1045,11 +1046,14 @@ const CreateTicketForm: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const user = TokenService.getUser();
+
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage("");
     setLoading(true);
-
+    formData.reported_by = user.email;
+    debugger;
     await TicketService.createTicket(formData).then(
       () => {
         setLoading(false);
@@ -1075,7 +1079,7 @@ const CreateTicketForm: React.FC = () => {
             <div className="w-100 d-flex flex-row gap-5 mb-2 form-layout">
               <Form.Group className="mb-3 w-50">
                 <Form.Label htmlFor="reported_by">Assigned By: </Form.Label>
-                <Form.Control id="reported_by" type="text" name="reported_by" placeholder="Assigned By:" value={formData.reported_by} onChange={handleChange} />
+                <Form.Control disabled readOnly id="reported_by" type="text" name="reported_by" value={user.first_name + " " + user.last_name} />
               </Form.Group>
               <Form.Group className="mb-3 w-50">
                 <Form.Label htmlFor="assigned_to">Assigned To: </Form.Label>

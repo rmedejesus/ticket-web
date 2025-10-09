@@ -1075,6 +1075,8 @@ const UpdateTicketForm: React.FC = () => {
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    formData.reported_by = users?.find((u) => u.email === formData.reported_by)?.email;
     await TicketService.updateTicket(id, formData).then(
       () => {
         setLoading(false);
@@ -1099,7 +1101,7 @@ const UpdateTicketForm: React.FC = () => {
             <div className="w-100 d-flex flex-row gap-5 mb-2 form-layout">
               <Form.Group className="mb-3 w-50">
                 <Form.Label htmlFor="reported_by">Assigned By: </Form.Label>
-                <Form.Control id="reported_by" type="text" name="reported_by" placeholder="Assigned By:" value={formData.reported_by} onChange={handleChange} />
+                <Form.Control disabled readOnly id="reported_by" type="text" name="reported_by" placeholder="Assigned By:" value={users?.find((u) => u.email === formData.reported_by)?.first_name + " " + users?.find((u) => u.email === formData.reported_by)?.last_name} />
               </Form.Group>
               <Form.Group className="mb-3 w-50">
                 <Form.Label htmlFor="assigned_to">Assigned To: </Form.Label>

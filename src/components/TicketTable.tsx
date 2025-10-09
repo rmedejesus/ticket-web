@@ -100,7 +100,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
               <td className={styles.tableCell}>{el.task_status}</td>
               <td className={styles.tableCell}>{el.task_priority}</td>
               <td className={styles.tableCell}>{el.note}</td>
-              <td className={styles.tableCell}>{el.task_status === "Completed" ? (<p className="perfect-alert">Done</p>) : el.alert_level == 0 ? (<p className="good-alert">Not Completed</p>) : el.alert_level == 1 ? (<p className="warn-alert">Action Required</p>) : (<p className="red-alert">Immediate Action Required</p>)}</td>
+              <td className={styles.tableCell}>{el.task_status === "Completed" ? (<p className="perfect-alert">Task Completed</p>) : el.task_status === "Assigned" ? (<p className={el.alert_level == 0 ? "good-alert" : el.alert_level == 1 ? "warn-alert" : "red-alert"}>Ticket Assigned</p>) : (<p className={el.alert_level == 0 ? "good-alert" : el.alert_level == 1 ? "warn-alert" : "red-alert"}>Ticket In Progress</p>)}</td>
               <td className={styles.tableCell}>{el.created_date}</td>
               <td className={styles.tableCell}>{el.completed_date}</td>
               {(user.id !== "HXMidxnxozPkc0Q1QgNU" && user.id !== "5XCQaqFvqjLk34jfw4VF") ? <td id="last-cell" className={styles.tableCell}>
