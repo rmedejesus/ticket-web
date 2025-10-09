@@ -110,14 +110,14 @@ body {
 }
 
 .warn-alert {
-  background-color: #eed202;
+  background-color: #E49B0F;
   padding: 5px 10px;
   border-radius: 4px;
   color: white;
 }
 
 .red-alert {
-  background-color: #ed1c24;
+  background-color: #A42A04;
   padding: 5px 10px;
   border-radius: 4px;
   color: white;
