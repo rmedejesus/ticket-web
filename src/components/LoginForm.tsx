@@ -26,7 +26,7 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="login-container">
       <div className="d-flex align-items-center login-div">
         <div>
           <img className="sj-gif" src="/sj.gif" alt="sj-logo" />

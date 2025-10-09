@@ -9,6 +9,12 @@ body {
   padding-bottom: 50px;
 }
 
+.login-container {
+  text-align: center;
+  text-align: -webkit-center;
+  padding-bottom: 50px;
+}
+
 .container {
   max-width: 90%;
 }
