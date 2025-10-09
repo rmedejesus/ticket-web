@@ -1081,7 +1081,7 @@ const CreateTicketForm: React.FC = () => {
                 <Form.Label htmlFor="assigned_to">Assigned To: </Form.Label>
                 <Form.Select id="assigned_to" name="assigned_to" value={formData.assigned_to} onChange={handleChange} disabled={isDropdownDisabled}>
                   <option value="">Select an option</option>
-                  {users?.map((user) => (
+                  {users?.filter((u) => u.id !== "46T2U1qcT3KVGmhkOYzq" && u.id !== "5XCQaqFvqjLk34jfw4VF" && u.id !== "BQF8TWCzQyBNEIKWOLL9" && u.id !== "HXMidxnxozPkc0Q1QgNU" && u.id !== "XpR1wfY0lJ133YSDFOWC").map((user) => (
                     <option key={user.email} value={user.id}>
                       {user.first_name + " " + user.last_name}
                     </option>
