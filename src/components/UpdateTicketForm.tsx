@@ -1103,7 +1103,7 @@ const UpdateTicketForm: React.FC = () => {
               </Form.Group>
               <Form.Group className="mb-3 w-50">
                 <Form.Label htmlFor="assigned_to">Assigned To: </Form.Label>
-                <Form.Select id="assigned_to" name="assigned_to" value={formData.assigned_to} onChange={handleChange}>
+                <Form.Select required id="assigned_to" name="assigned_to" value={formData.assigned_to} onChange={handleChange}>
                   <option value="">Select an option</option>
                   {users?.filter((u) => u.id !== "46T2U1qcT3KVGmhkOYzq" && u.id !== "5XCQaqFvqjLk34jfw4VF" && u.id !== "BQF8TWCzQyBNEIKWOLL9" && u.id !== "HXMidxnxozPkc0Q1QgNU" && u.id !== "XpR1wfY0lJ133YSDFOWC").map((user) => (
                     <option key={user.email} value={user.id}>
@@ -1114,7 +1114,7 @@ const UpdateTicketForm: React.FC = () => {
               </Form.Group>
               <Form.Group className="mb-3 w-50">
                 <Form.Label htmlFor="request_type">Request Type: </Form.Label>
-                <Form.Select id="request_type" name="request_type" value={formData.request_type} onChange={handleChange}>
+                <Form.Select required id="request_type" name="request_type" value={formData.request_type} onChange={handleChange}>
                   <option value="">Select an option</option> {/* Optional: default empty option */}
                   <option key="0" value="Cleaning">Cleaning</option>
                   <option key="1" value="Maintenance">Maintenance</option>
@@ -1122,7 +1122,7 @@ const UpdateTicketForm: React.FC = () => {
               </Form.Group>
               <Form.Group className="mb-3 w-50">
                 <Form.Label htmlFor="task_priority">Priority: </Form.Label>
-                <Form.Select id="task_priority" name="task_priority" value={formData.task_priority} onChange={handleChange}>
+                <Form.Select required id="task_priority" name="task_priority" value={formData.task_priority} onChange={handleChange}>
                   <option value="">Select an option</option> {/* Optional: default empty option */}
                   <option key="0" value="Low">Low</option>
                   <option key="1" value="Medium">Medium</option>
@@ -1137,7 +1137,7 @@ const UpdateTicketForm: React.FC = () => {
             <div className="w-100 d-flex flex-row gap-3 form-layout">
               <Form.Group className="mb-3 w-25">
                 <Form.Label htmlFor="accommodation_type">Accommodation Type: </Form.Label>
-                <Form.Select id="accommodation_type" name="accommodation_type" value={selectedType?.name || formData.accommodation_type} onChange={handleChange}>
+                <Form.Select required id="accommodation_type" name="accommodation_type" value={selectedType?.name || formData.accommodation_type} onChange={handleChange}>
                   <option value="">Select an option</option> {/* Optional: default empty option */}
                   {accommodationData.map((acc) => (
                     <option key={acc.id} value={acc.name}>
@@ -1148,7 +1148,7 @@ const UpdateTicketForm: React.FC = () => {
               </Form.Group>
               <Form.Group className="mb-3 w-25">
                 <Form.Label htmlFor="accommodation_name">Accommodation Name: </Form.Label>
-                <Form.Select id="accommodation_name" name="accommodation_name" value={selectedName?.name || formData.accommodation_name} onChange={handleChange}>
+                <Form.Select required id="accommodation_name" name="accommodation_name" value={selectedName?.name || formData.accommodation_name} onChange={handleChange}>
                   <option value="">Select an option</option> {/* Optional: default empty option */}
                   {availableNames.map((acc) => (
                     <option key={acc.id} value={acc.name}>
@@ -1159,7 +1159,7 @@ const UpdateTicketForm: React.FC = () => {
               </Form.Group>
               <Form.Group className="mb-3 w-25">
                 <Form.Label htmlFor="accommodation_room_number">Room Number: </Form.Label>
-                <Form.Select id="accommodation_room_number" name="accommodation_room_number" value={selectedRoom?.name || formData.accommodation_room_number} onChange={handleChange}>
+                <Form.Select required id="accommodation_room_number" name="accommodation_room_number" value={selectedRoom?.name || formData.accommodation_room_number} onChange={handleChange}>
                   <option value="">Select an option</option> {/* Optional: default empty option */}
                   {availableRooms.map((acc) => (
                     <option key={acc.id} value={acc.name}>
@@ -1170,7 +1170,7 @@ const UpdateTicketForm: React.FC = () => {
               </Form.Group>
               <Form.Group className="mb-3 w-25">
                 <Form.Label htmlFor="accommodation_specific_location">Specific Location: </Form.Label>
-                <Form.Select id="accommodation_specific_location" name="accommodation_specific_location" value={selectedLocation?.name || formData.accommodation_specific_location} onChange={handleChange}>
+                <Form.Select required id="accommodation_specific_location" name="accommodation_specific_location" value={selectedLocation?.name || formData.accommodation_specific_location} onChange={handleChange}>
                   <option value="">Select an option</option> {/* Optional: default empty option */}
                   {availableLocations.map((acc) => (
                     <option key={acc.id} value={acc.name}>
@@ -1192,7 +1192,7 @@ const UpdateTicketForm: React.FC = () => {
           <div className="w-100">
             <Form.Group className="mb-3">
               <Form.Label htmlFor="request_detail">Details: </Form.Label>
-              <Form.Control id="request_detail" as="textarea" name="request_detail" placeholder="Details:" value={formData.request_detail} onChange={handleChange} rows={3} />
+              <Form.Control required id="request_detail" as="textarea" name="request_detail" placeholder="Details:" value={formData.request_detail} onChange={handleChange} rows={3} />
             </Form.Group>
 
             <Form.Group className="mb-3">
