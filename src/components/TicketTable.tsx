@@ -88,7 +88,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
           {slice.map((el: ITicket) => (
             <tr className={styles.tableRowItems} key={el.id}>
               <td className={styles.tableCell}>{el.ticket_id}</td>
-              <td className={styles.tableCell}>{el.reported_by}</td>
+              <td className={styles.tableCell}>{el.reported_by?.split("/")[0]}</td>
               <td className={styles.tableCell}>{users?.find(user => user.id === el.assigned_to)?.first_name + " " + users?.find(user => user.id === el.assigned_to)?.last_name}</td>
               <td className={styles.tableCell}>{el.accommodation_name}</td>
               <td className={styles.tableCell}>{el.accommodation_room_number == "0" ? "N/A" : el.accommodation_room_number}</td>

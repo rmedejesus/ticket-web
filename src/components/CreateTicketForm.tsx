@@ -1052,7 +1052,7 @@ const CreateTicketForm: React.FC = () => {
     e.preventDefault();
     setMessage("");
     setLoading(true);
-    formData.reported_by = user.email;
+    formData.reported_by = user.first_name + " " + user.last_name + "/" + user.email;
     debugger;
     await TicketService.createTicket(formData).then(
       () => {
