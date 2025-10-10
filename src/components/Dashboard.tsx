@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
   const [content, setContent] = useState<ITicket[]>([]);
   const [filteredContent, setFilteredContent] = useState<ITicket[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
-  //const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
   const navigate = useNavigate();
@@ -30,9 +30,9 @@ const Dashboard: React.FC = () => {
         setContent(response2.data.tickets);
 
       } catch (err) {
-        //setLoading(false);
+        setLoading(false);
       } finally {
-        //setLoading(false);
+        setLoading(false);
       }
     };
 
@@ -45,8 +45,7 @@ const Dashboard: React.FC = () => {
         const newFilteredData = content.filter(item =>
           item.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.reported_by?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          users?.find(user => user.id === item.assigned_to)?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          users?.find(user => user.id === item.assigned_to)?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (users?.find(user => user.id === item.assigned_to)?.first_name?.toLowerCase() + " " + users?.find(user => user.id === item.assigned_to)?.last_name?.toLowerCase()).includes(searchTerm.toLowerCase()) ||
           item.accommodation_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.accommodation_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
           item.request_type.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -60,10 +59,7 @@ const Dashboard: React.FC = () => {
     }
     //setLoading(false);
   }, [searchTerm, content]);
-  // debugger;
-  // if (loading) {
-  //   return <div id="loading-data"><p className="spinner-grow custom-spinner-size text-danger"></p><h3>Loading tickets...</h3></div>;
-  // }
+  
 
   const handleCreateTicket = () => {
     navigate('/create-ticket');
@@ -84,8 +80,7 @@ const Dashboard: React.FC = () => {
         />
       </div>
       <div id="table-container">
-        {filteredContent.length > 0 && users.length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : <p>No data</p>}
-        {/* {filteredContent !== null ? (filteredContent as ITicket[]).length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={7} /> : content !== null ? (content as ITicket[]).length > 0 ? <TicketTable data={content!} users={users!} rowsPerPage={7} /> : <p>No data</p> : <p>No data</p> : <p>No data</p>} */}
+        {!loading ? (filteredContent.length > 0 && users.length > 0 ? <TicketTable data={filteredContent!} users={users!} rowsPerPage={5} /> : <p>No data</p>) : <div id="loading-data"><p className="spinner-grow custom-spinner-size text-danger"></p><h3>Loading tickets...</h3></div>}
       </div>
     </div>
   );

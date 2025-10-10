@@ -963,7 +963,6 @@ const CreateTicketForm: React.FC = () => {
   useEffect(() => {
     userService.getUsers().then(
       (response) => {
-        debugger;
         const groupedOptions = response.data.users.reduce((acc: GroupedOptions, option: any) => {
           if (option.role === "Property Team" || option.role === "Guest Services" || option.role === "HR") {
             if (!acc[option.role]) {
@@ -1069,7 +1068,6 @@ const CreateTicketForm: React.FC = () => {
     setMessage("");
     setLoading(true);
     formData.reported_by = user.first_name + " " + user.last_name + "/" + user.email;
-    debugger;
     await TicketService.createTicket(formData).then(
       () => {
         setLoading(false);
