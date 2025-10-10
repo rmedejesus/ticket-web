@@ -81,7 +81,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
             <th className={styles.tableHeader}>Alert Level</th>
             <th className={styles.tableHeader}>Created Date</th>
             <th className={styles.tableHeader}>Completed Date</th>
-            {(user.id !== "HXMidxnxozPkc0Q1QgNU" && user.id !== "5XCQaqFvqjLk34jfw4VF") ? <th className={styles.tableHeader}></th> : ""}
+            {(user.role !== "Upper Management") ? <th className={styles.tableHeader}></th> : ""}
           </tr>
         </thead>
         <tbody>
@@ -103,7 +103,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
               <td className={styles.tableCell}>{el.task_status === "Completed" ? (<p className="perfect-alert">Task Completed</p>) : el.task_status === "Assigned" ? (<p className={el.alert_level == 0 ? "good-alert" : el.alert_level == 1 ? "warn-alert" : "red-alert"}>Ticket Assigned</p>) : (<p className={el.alert_level == 0 ? "good-alert" : el.alert_level == 1 ? "warn-alert" : "red-alert"}>Ticket In Progress</p>)}</td>
               <td className={styles.tableCell}>{el.created_date}</td>
               <td className={styles.tableCell}>{el.completed_date}</td>
-              {(user.id !== "HXMidxnxozPkc0Q1QgNU" && user.id !== "5XCQaqFvqjLk34jfw4VF") ? <td id="last-cell" className={styles.tableCell}>
+              {(user.role !== "Upper Management") ? <td id="last-cell" className={styles.tableCell}>
                 {el.task_status === "Assigned" ?
                   <div>
                     <Button className="text-nowrap btn-sm edit-btn" onClick={() => handlePendingTicket(el.id)}>

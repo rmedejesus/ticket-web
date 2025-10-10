@@ -36,9 +36,13 @@ interface SpecificLocation {
   name: string;
 }
 
+interface GroupedOptions {
+  [key: string]: IUser[];
+}
+
 const CreateTicketForm: React.FC = () => {
   const [message, setMessage] = useState<string>("");
-  const [users, setUsers] = useState<IUser[]>();
+  const [groupedUsers, setGroupedUsers] = useState<GroupedOptions>();
   const [loading, setLoading] = useState<boolean>(false);
   const [isDropdownDisabled, setIsDropdownDisabled] = useState(false);
 
@@ -959,7 +963,19 @@ const CreateTicketForm: React.FC = () => {
   useEffect(() => {
     userService.getUsers().then(
       (response) => {
-        setUsers(response.data.users);
+        debugger;
+        const groupedOptions = response.data.users.reduce((acc: GroupedOptions, option: any) => {
+          if (option.role === "Property Team" || option.role === "Guest Services" || option.role === "HR") {
+            if (!acc[option.role]) {
+              acc[option.role] = [];
+            }
+            acc[option.role].push(option);
+          }
+
+          return acc;
+        }, {});
+
+        setGroupedUsers(groupedOptions);
       },
       (error) => {
         const _content = error.response.data.error;
@@ -977,11 +993,11 @@ const CreateTicketForm: React.FC = () => {
         setIsDropdownDisabled(true);
         formData.assigned_to = "iNciDWxoTHOEP38MnZIy";
       }
-      
+
       if (value === "Guest") {
         setIsDropdownDisabled(false);
       }
-      
+
       const accommodation = accommodationData.find((c) => c.name === value);
       setSelectedType(accommodation || null);
     }
@@ -1084,12 +1100,22 @@ const CreateTicketForm: React.FC = () => {
               <Form.Group className="mb-3 w-50">
                 <Form.Label htmlFor="assigned_to">Assigned To: </Form.Label>
                 <Form.Select required id="assigned_to" name="assigned_to" value={formData.assigned_to} onChange={handleChange} disabled={isDropdownDisabled}>
-                  <option value="">Select an option</option>
+                  {/* <option value="">Select an option</option>
                   {users?.filter((u) => u.id !== "46T2U1qcT3KVGmhkOYzq" && u.id !== "5XCQaqFvqjLk34jfw4VF" && u.id !== "BQF8TWCzQyBNEIKWOLL9" && u.id !== "HXMidxnxozPkc0Q1QgNU" && u.id !== "XpR1wfY0lJ133YSDFOWC").map((user) => (
                     <option key={user.email} value={user.id}>
                       {user.first_name + " " + user.last_name}
                     </option>
-                  ))}
+                  ))} */}
+                  <option value="">Select an option</option>
+                  {groupedUsers ? Object.entries(groupedUsers).sort().map(([groupName, options]) => (
+                    <optgroup key={groupName} label={groupName}>
+                      {options.map((option) => (
+                        <option key={option.email} value={option.id}>
+                          {option.first_name + " " + option.last_name}
+                        </option>
+                      ))}
+                    </optgroup>
+                  )) : ""}
                 </Form.Select>
               </Form.Group>
               <Form.Group className="mb-3 w-50">
