@@ -1048,7 +1048,7 @@ const UpdateTicketForm: React.FC = () => {
       [name]: value,
     }));
   };
-
+  debugger;
   // Effect to update available states when country changes
   useEffect(() => {
     if (selectedType) {
@@ -1068,7 +1068,7 @@ const UpdateTicketForm: React.FC = () => {
     if (selectedName) {
       setAvailableRooms(selectedName.rooms);
       setSelectedRoom(null);
-      //setSelectedLocation(null);
+      setSelectedLocation(null);
     } else {
       setAvailableRooms([]);
       setSelectedRoom(null);
@@ -1079,9 +1079,9 @@ const UpdateTicketForm: React.FC = () => {
   useEffect(() => {
     if (selectedRoom) {
       setAvailableLocations(selectedRoom.locations);
-      //setSelectedLocation(null);
+      setSelectedLocation(null);
     } else {
-      setAvailableLocations([]);
+      //setAvailableLocations([]);
       setSelectedLocation(null);
     }
   }, [selectedRoom]);
