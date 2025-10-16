@@ -1104,7 +1104,7 @@ const CreateTicketForm: React.FC = () => {
                       {user.first_name + " " + user.last_name}
                     </option>
                   ))} */}
-                  <option value="">Select an option</option> 
+                  <option value="">Select an option</option>
                   {groupedUsers ? Object.entries(groupedUsers).sort().map(([groupName, options]) => (
                     <optgroup key={groupName} label={groupName}>
                       {groupName === "HR" ? options.sort((a, b) => b.last_name!.localeCompare(a.last_name!)).map((option) => (
