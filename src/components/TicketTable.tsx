@@ -96,10 +96,10 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
               <td className={styles.tableCell}>{el.accommodation_type}</td>
               <td className={styles.tableCell}>{el.is_immediate_access ? "Yes" : "No"}</td>
               <td className={styles.tableCell}>{el.request_type}</td>
-              <td className={styles.tableCell}>{el.request_detail}</td>
+              <td className={styles.tableCell} style={{textWrap: 'wrap', textAlign: 'left'}}>{el.request_detail}</td>
               <td className={styles.tableCell}>{el.task_status}</td>
               <td className={styles.tableCell}>{el.task_priority}</td>
-              <td className={styles.tableCell}>{el.note}</td>
+              <td className={styles.tableCell} style={{textWrap: 'wrap', textAlign: 'left'}}>{el.note}</td>
               <td className={styles.tableCell}>{el.task_status === "Completed" ? (<p className="perfect-alert">Task Completed</p>) : el.task_status === "Assigned" ? (<p className={el.alert_level == 0 ? "good-alert" : el.alert_level == 1 ? "warn-alert" : "red-alert"}>Ticket Assigned</p>) : (<p className={el.alert_level == 0 ? "good-alert" : el.alert_level == 1 ? "warn-alert" : "red-alert"}>Ticket In Progress</p>)}</td>
               <td className={styles.tableCell}>{el.created_date}</td>
               <td className={styles.tableCell}>{el.completed_date}</td>
