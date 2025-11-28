@@ -2,7 +2,7 @@ import axios from "axios";
 import TokenService from "./token.service";
 
 const instance = axios.create({
-  baseURL: "https://ticket-service-964914219323.asia-northeast3.run.app/api/v1/",
+  baseURL: "https://ticket-api-438898933635.asia-northeast3.run.app/api/v1/",
   //baseURL: "http://localhost:5000/api/v1/",
   headers: {
     "Content-Type": "application/json",
@@ -80,7 +80,7 @@ instance.interceptors.response.use(
           //const token = TokenService.getLocalAccessToken();
           //const user = TokenService.getUser();
           //const rs = await axios.post("http://localhost:5000/api/v1/auth/refresh-token", { id: user.id, refresh_token: token.refresh });
-          const rs = await axios.post("https://ticket-service-964914219323.asia-northeast3.run.app/api/v1/auth/refresh-token", { id: user.id, refresh_token: token.refresh });
+          const rs = await axios.post("https://ticket-api-438898933635.asia-northeast3.run.app/api/v1/auth/refresh-token", { id: user.id, refresh_token: token.refresh });
 
           const accessToken = rs.data.token;
           //TokenService.updateLocalAccessToken(accessToken);
