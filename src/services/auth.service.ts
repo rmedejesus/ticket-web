@@ -10,7 +10,6 @@ class AuthService {
       })
       .then(response => {
         if (response.data) {
-          debugger;
           TokenService.setUserAndToken(response.data.user, response.data.token);
         }
 
