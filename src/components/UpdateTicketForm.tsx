@@ -1049,7 +1049,7 @@ const UpdateTicketForm: React.FC = () => {
       [name]: value,
     }));
   };
-  debugger;
+
   // Effect to update available states when country changes
   useEffect(() => {
     if (selectedType) {
@@ -1097,7 +1097,7 @@ const UpdateTicketForm: React.FC = () => {
 
     //formData.reported_by += "/" + users?.find((u) => u.email === formData.reported_by)?.email;
 
-    const fullName = userData.last_name + " " + userData.first_name;
+    const fullName = userData.first_name + " " + userData.last_name;
 
     formData.last_updated_by = fullName;
 
