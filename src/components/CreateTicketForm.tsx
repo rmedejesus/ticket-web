@@ -1068,6 +1068,7 @@ const CreateTicketForm: React.FC = () => {
     setMessage("");
     setLoading(true);
     formData.reported_by = user.first_name + " " + user.last_name + "/" + user.email;
+    formData.last_updated_by = user.first_name + " " + user.last_name;
     await TicketService.createTicket(formData).then(
       () => {
         setLoading(false);

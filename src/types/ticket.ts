@@ -16,6 +16,7 @@ export interface ITicket {
   is_immediate_access: boolean;
   created_date: string;
   completed_date: string;
+  last_updated_by: string;
 }
 
 export interface ITicketRequest {
@@ -30,4 +31,5 @@ export interface ITicketRequest {
 	assigned_to?: string;
 	note?: string;
   is_immediate_access?: string;
+  last_updated_by?: string;
 }

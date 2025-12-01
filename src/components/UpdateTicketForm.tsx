@@ -6,6 +6,7 @@ import type { IUser } from '../types/user';
 import userService from '../services/user.service';
 import { Button, Form } from 'react-bootstrap';
 import BackButton from './BackButton';
+import authService from '../services/auth.service';
 
 interface AccommodationType {
   id: number;
@@ -1088,11 +1089,18 @@ const UpdateTicketForm: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const userData = authService.getCurrentUser();
+
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     //formData.reported_by += "/" + users?.find((u) => u.email === formData.reported_by)?.email;
+
+    const fullName = userData.last_name + " " + userData.first_name;
+
+    formData.last_updated_by = fullName;
+
     await TicketService.updateTicket(id, formData).then(
       () => {
         setLoading(false);

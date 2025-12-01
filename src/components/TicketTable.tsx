@@ -8,6 +8,7 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import TicketService from '../services/ticket.service';
 import TokenService from "../services/token.service";
+import authService from "../services/auth.service";
 
 interface TableProps {
   data: ITicket[];
@@ -26,36 +27,50 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
     navigate('/update-ticket/' + id);
   };
 
+  const userData = authService.getCurrentUser();
+
   const handlePendingTicket = async (id: string) => {
-    setLoading(true);
-    await TicketService.pendingTicket(id).then(
-      () => {
-        setLoading(false);
-        alert("Ticket status updated successfully.");
-        window.location.reload();
-      },
-      (error) => {
-        setLoading(false);
-        const resMessage = error.response.data.error;
-        alert(resMessage);
-      }
-    );
+    if (window.confirm('Are you sure you want to update this ticket?')) {
+      setLoading(true);
+      const fullName = userData.last_name + " " + userData.first_name;
+
+      await TicketService.pendingTicket(id, fullName).then(
+        () => {
+          setLoading(false);
+          alert("Ticket status updated successfully.");
+          window.location.reload();
+        },
+        (error) => {
+          setLoading(false);
+          const resMessage = error.response.data.error;
+          alert(resMessage);
+        }
+      );
+    } else {
+      console.log('Update cancelled.');
+    }
   };
 
   const handleCompletedTicket = async (id: string) => {
-    setLoading(true);
-    await TicketService.completedTicket(id).then(
-      () => {
-        setLoading(false);
-        alert("Ticket status updated successfully.");
-        window.location.reload();
-      },
-      (error) => {
-        setLoading(false);
-        const resMessage = error.response.data.error;
-        alert(resMessage);
-      }
-    );
+    if (window.confirm('Are you sure you want to update this item?')) {
+      setLoading(true);
+      const fullName = userData.last_name + " " + userData.first_name;
+
+      await TicketService.completedTicket(id, fullName).then(
+        () => {
+          setLoading(false);
+          alert("Ticket status updated successfully.");
+          window.location.reload();
+        },
+        (error) => {
+          setLoading(false);
+          const resMessage = error.response.data.error;
+          alert(resMessage);
+        }
+      );
+    } else {
+      console.log('Update cancelled.');
+    }
   };
 
   const user = TokenService.getUser();
@@ -68,6 +83,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
             <th className={styles.tableHeader}>Ticket #</th>
             <th className={styles.tableHeader}>Reported By</th>
             <th className={styles.tableHeader}>Assigned To</th>
+            <th className={styles.tableHeader}>Last Updated By</th>
             <th className={styles.tableHeader}>Accommodation Name</th>
             <th className={styles.tableHeader}>Room No.</th>
             <th className={styles.tableHeader}>Specific Location</th>
@@ -90,16 +106,17 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
               <td className={styles.tableCell}>{el.ticket_id}</td>
               <td className={styles.tableCell}>{el.reported_by?.split("/")[0]}</td>
               <td className={styles.tableCell}>{users?.find(user => user.id === el.assigned_to)?.first_name + " " + users?.find(user => user.id === el.assigned_to)?.last_name}</td>
+              <td className={styles.tableCell}>{el.last_updated_by}</td>
               <td className={styles.tableCell}>{el.accommodation_name}</td>
               <td className={styles.tableCell}>{el.accommodation_room_number == "0" ? "N/A" : el.accommodation_room_number}</td>
               <td className={styles.tableCell}>{el.accommodation_specific_location}</td>
               <td className={styles.tableCell}>{el.accommodation_type}</td>
               <td className={styles.tableCell}>{el.is_immediate_access ? "Yes" : "No"}</td>
               <td className={styles.tableCell}>{el.request_type}</td>
-              <td className={styles.tableCell} style={{textWrap: 'wrap', textAlign: 'left', minWidth: '300px'}}>{el.request_detail}</td>
+              <td className={styles.tableCell} style={{ textWrap: 'wrap', textAlign: 'left', minWidth: '300px' }}>{el.request_detail}</td>
               <td className={styles.tableCell}>{el.task_status}</td>
               <td className={styles.tableCell}>{el.task_priority}</td>
-              <td className={styles.tableCell} style={{textWrap: 'wrap', textAlign: 'left', minWidth: '300px'}}>{el.note}</td>
+              <td className={styles.tableCell} style={{ textWrap: 'wrap', textAlign: 'left', minWidth: '300px' }}>{el.note}</td>
               <td className={styles.tableCell}>{el.task_status === "Completed" ? (<p className="perfect-alert">Task Completed</p>) : el.task_status === "Assigned" ? (<p className={el.alert_level == 0 ? "good-alert" : el.alert_level == 1 ? "warn-alert" : "red-alert"}>Ticket Assigned</p>) : (<p className={el.alert_level == 0 ? "good-alert" : el.alert_level == 1 ? "warn-alert" : "red-alert"}>Ticket In Progress</p>)}</td>
               <td className={styles.tableCell}>{el.created_date}</td>
               <td className={styles.tableCell}>{el.completed_date}</td>

@@ -1,5 +1,4 @@
 import type { IToken } from "../types/token";
-import type { IUser } from "../types/user";
 
 class TokenService {
   getLocalAccessToken() {
@@ -15,7 +14,7 @@ class TokenService {
     return JSON.parse(localStorage.getItem("user")!);
   }
 
-  setUserAndToken(userData: IUser, tokenData: IToken) {
+  setUserAndToken(userData: any, tokenData: any) {
     //console.log(JSON.stringify(tokenData));
     localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", JSON.stringify(tokenData));

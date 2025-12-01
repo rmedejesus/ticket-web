@@ -18,12 +18,12 @@ class TicketService {
     return api.patch("/tickets/" + id, ticket);
   }
 
-  pendingTicket(id: string) {
-    return api.patch("/tickets/" + id + "/pending");
+  pendingTicket(id: string, fullName: string) {
+    return api.patch("/tickets/" + id + "/pending", fullName);
   }
 
-  completedTicket(id: string) {
-    return api.patch("/tickets/" + id + "/completed");
+  completedTicket(id: string, fullName: string) {
+    return api.patch("/tickets/" + id + "/completed", fullName);
   }
 
   deleteTicket(id: string) {
