@@ -32,7 +32,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
   const handlePendingTicket = async (id: string) => {
     if (window.confirm('Are you sure you want to update this ticket?')) {
       setLoading(true);
-      const fullName = userData.last_name + " " + userData.first_name;
+      const fullName = userData.first_name + " " + userData.last_name;
 
       await TicketService.pendingTicket(id, fullName).then(
         () => {
@@ -54,7 +54,7 @@ const TicketTable: React.FC<TableProps> = ({ data, users, rowsPerPage }) => {
   const handleCompletedTicket = async (id: string) => {
     if (window.confirm('Are you sure you want to update this item?')) {
       setLoading(true);
-      const fullName = userData.last_name + " " + userData.first_name;
+      const fullName = userData.first_name + " " + userData.last_name;
 
       await TicketService.completedTicket(id, fullName).then(
         () => {
