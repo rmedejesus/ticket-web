@@ -68,7 +68,7 @@ const Dashboard: React.FC = () => {
   return (
     <div className="main-container">
       <div className="d-flex mb-4 gap-3 upper-container">
-        {(user.id !== "HXMidxnxozPkc0Q1QgNU" && user.id !== "5XCQaqFvqjLk34jfw4VF") ? <Button className="text-nowrap create-btn" onClick={handleCreateTicket}>
+        {user.id !== "HXMidxnxozPkc0Q1QgNU" ? <Button className="text-nowrap create-btn" onClick={handleCreateTicket}>
           Create a New Ticket
         </Button> : ""}
         <input
